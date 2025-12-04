@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -20,7 +21,7 @@ func part_one() {
 	zero_counter := 0
 	part_two_zero_counter := 0
 
-	println("Dial starts at", dial_val)
+	println("dial starts at", dial_val)
 
 	for _, line := range string_lists {
 		if line == "" {
@@ -32,16 +33,17 @@ func part_one() {
 
 		if direction == "L" {
 			if dial_val-distance < 0 {
-				part_two_zero_counter += int_abs((dial_val - distance) / 100)
+				part_two_zero_counter += (int_abs(dial_val-distance) / 100)
 
+				fmt.Println("added to part_two zero counter", (int_abs(dial_val-distance) / 100))
 				dial_val = (100 - int_abs(dial_val-distance)) % 100
 			} else {
 				dial_val -= distance
 			}
 		} else if direction == "R" {
 			if dial_val+distance > 99 {
-				part_two_zero_counter += (dial_val + distance) / 100
-
+				part_two_zero_counter += ((dial_val + distance) / 100)
+				fmt.Println("added to part_two zero counter", (dial_val+distance)/100)
 				dial_val = (dial_val + distance) % 100
 			} else {
 				dial_val += distance
@@ -53,9 +55,9 @@ func part_one() {
 		}
 
 		println("dial is rotated", direction, distance, "to point at", dial_val)
-		println("part two zero counter at", part_two_zero_counter)
 	}
 	println("zero counter at", zero_counter)
+	println("part two zero counter at", part_two_zero_counter)
 }
 
 func main() {
