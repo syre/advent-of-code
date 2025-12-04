@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+type coord struct {
+	x int
+	y int
+}
+
 func print_2d_array(arr [][]string) {
 	for _, row := range arr {
 		fmt.Println(row)
@@ -76,11 +81,6 @@ func part_one() {
 		}
 	}
 	fmt.Println(toilet_rolls_accessable_by_fork_lift)
-}
-
-type coord struct {
-	x int
-	y int
 }
 
 func find_removed_toilet_roll_indices(toilet_rolls_map [][]string) []coord {
