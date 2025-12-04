@@ -68,24 +68,26 @@ func part_two() {
 		distance, _ := strconv.Atoi(line[1:])
 
 		if direction == "L" {
-			for i := distance; i >= 0; i-- {
-				if dial_val == -1 {
+			for i := 0; i < distance; i++ {
+				dial_val -= 1
+				if dial_val < 0 {
+					dial_val = 99
+				}
+				if dial_val == 0 {
 					fmt.Println("incrementing zero counter")
 					zero_counter += 1
-					dial_val = 99
-					continue
 				}
-				dial_val -= 1
 			}
 		} else if direction == "R" {
 			for i := 0; i < distance; i++ {
-				if dial_val == 99 {
+				dial_val += 1
+				if dial_val > 99 {
+					dial_val = 0
+				}
+				if dial_val == 0 {
 					fmt.Println("incrementing zero counter")
 					zero_counter += 1
-					dial_val = 0
-					continue
 				}
-				dial_val += 1
 			}
 		}
 		println("dial is rotated", direction, distance, "to point at", dial_val)
