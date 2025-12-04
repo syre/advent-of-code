@@ -37,8 +37,8 @@ func part_one() {
 	print_2d_array(toilet_rolls_map)
 
 	toilet_rolls_accessable_by_fork_lift := 0
-	for i := 0; i < len(toilet_rolls_map); i++ {
-		for j := 0; j < len(toilet_rolls_map[0]); j++ {
+	for i := range toilet_rolls_map {
+		for j := range toilet_rolls_map[0] {
 			if toilet_rolls_map[i][j] != "@" {
 				continue
 			}
@@ -85,8 +85,8 @@ type coord struct {
 
 func find_removed_toilet_roll_indices(toilet_rolls_map [][]string) []coord {
 	coords := []coord{}
-	for i := 0; i < len(toilet_rolls_map); i++ {
-		for j := 0; j < len(toilet_rolls_map[0]); j++ {
+	for i := range len(toilet_rolls_map) {
+		for j := range len(toilet_rolls_map[0]) {
 			if toilet_rolls_map[i][j] != "@" {
 				continue
 			}
@@ -154,6 +154,6 @@ func part_two() {
 }
 
 func main() {
-	//part_one()
+	part_one()
 	part_two()
 }
