@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -27,55 +28,38 @@ func part_one() {
 }
 
 func part_two() {
-	// turn off 3 permutations
-	input, _ := os.ReadFile("test_input")
+	input, _ := os.ReadFile("input")
 	string_lists := strings.Split(string(input), "\n")
 	joltage_sum := 0
 	for _, line := range string_lists {
-		largest_joltage := 0
-		// oh god what have i done
-		for i0 := 0; i0 < len(line)-1; i0++ {
-			for i1 := i0 + 1; i1 < len(line); i1++ {
-				for i2 := i0 + 2; i2 < len(line); i2++ {
-					for i3 := i0 + 3; i3 < len(line); i3++ {
-						for i4 := i0 + 4; i4 < len(line); i4++ {
-							for i5 := i0 + 5; i5 < len(line); i5++ {
-								for i6 := i0 + 6; i6 < len(line); i6++ {
-									for i7 := i0 + 7; i7 < len(line); i7++ {
-										for i8 := i0 + 8; i8 < len(line); i8++ {
-											for i9 := i0 + 9; i9 < len(line); i9++ {
-												for i10 := i0 + 10; i10 < len(line); i10++ {
-													joltage_string := string([]byte{
-														line[i0],
-														line[i1],
-														line[i2],
-														line[i3],
-														line[i4],
-														line[i5],
-														line[i6],
-														line[i7],
-														line[i8],
-														line[i9],
-														line[i10],
-													})
-													joltage, _ := strconv.Atoi(joltage_string)
-													if joltage > largest_joltage {
-														largest_joltage = joltage
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
+		var joltage_str strings.Builder
+		chars_left := 12
+		// we know first number must be largest in the span of 0 -> len(line)-12
+		// next number largest in the span of previous number index -> len(line)-11
+		// and so on
+		iterator_start := 0
+		iterator_end := len(line) + 1 - chars_left
+
+		for chars_left > 0 {
+			largest_num := -1
+			largest_num_index := -1
+			for i := iterator_start; i < iterator_end; i++ {
+				num, _ := strconv.Atoi(string(line[i]))
+				if num > largest_num {
+					largest_num = num
+					largest_num_index = i
 				}
 			}
+			joltage_str.WriteString(string(line[largest_num_index]))
+			iterator_start = largest_num_index + 1
+			iterator_end = len(line) + 2 - chars_left
+			chars_left -= 1
 		}
-		joltage_sum += largest_joltage
+		joltage_int, _ := strconv.Atoi(joltage_str.String())
+		fmt.Println("largest joltage:", joltage_str.String())
+		joltage_sum += joltage_int
 	}
-	println(joltage_sum)
+	println("joltage sum:", joltage_sum)
 }
 
 func main() {
