@@ -51,10 +51,11 @@ func part_one() {
 }
 
 func part_two() {
-	input, _ := os.ReadFile("test_input")
+	input, _ := os.ReadFile("input")
 	problem_input := strings.Split(string(input), "\n")
 	problem_matrix := [][]string{}
-	// populate problem matrix - this time just split each character
+
+	// populate problem matrix - this time just split on each character
 	for index, val := range problem_input {
 		problem_matrix = append(problem_matrix, []string{})
 		splitted := strings.Split(val, "")
@@ -67,9 +68,12 @@ func part_two() {
 	number_sum := 0
 	var number_str strings.Builder
 	numbers_list := []int{}
-	for j := len(problem_matrix[0]) - 1; j > 0; j-- {
+
+	// iterate right to left, top to bottom
+	for j := len(problem_matrix[0]) - 1; j >= 0; j-- {
 		for i := 0; i < len(problem_matrix); i++ {
 			el := problem_matrix[i][j]
+			// if end of column - throw the number for the column in the numbers_list
 			if i == len(problem_matrix)-1 {
 				number, err := strconv.Atoi(strings.TrimSpace(number_str.String()))
 				number_str.Reset()
@@ -77,10 +81,8 @@ func part_two() {
 					numbers_list = append(numbers_list, number)
 				}
 			}
-
-			if el == "" {
-				continue
-			} else if el == "*" {
+			// when we meet either a * or a + we perform the operation and add it to number_sum
+			if el == "*" {
 				fmt.Println(numbers_list)
 				mult_sum := 1
 				for _, num := range numbers_list {
