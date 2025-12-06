@@ -14,7 +14,7 @@ func print_2d_array(arr [][]string) {
 }
 
 func main() {
-	input, _ := os.ReadFile("test_input")
+	input, _ := os.ReadFile("input")
 	problem_input := strings.Split(string(input), "\n")
 	problem_matrix := [][]string{}
 	// populate problem matrix
@@ -28,15 +28,15 @@ func main() {
 	print_2d_array(problem_matrix)
 
 	total_sum := 0
-	for i := 0; i < len(problem_matrix); i++ {
-		operator := problem_matrix[len(problem_matrix[0])-1][i]
+	for i := 0; i < len(problem_matrix[0]); i++ {
+		operator := problem_matrix[len(problem_matrix)-1][i]
 		var column_sum int
 		if operator == "*" {
 			column_sum = 1
 		} else if operator == "+" {
 			column_sum = 0
 		}
-		for j := 0; j < len(problem_matrix[i])-1; j++ {
+		for j := 0; j < len(problem_matrix)-1; j++ {
 			number, _ := strconv.Atoi(problem_matrix[j][i])
 			if operator == "*" {
 				column_sum *= number
